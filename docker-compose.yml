@@ -1,0 +1,26 @@
+version: '2'
+services:
+  mysql:
+        image: mysql:8.0
+        container_name: mysql-server-80
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+          - .:/application
+        restart: always
+        environment:
+          - MYSQL_ROOT_PASSWORD=Learn2Exceed@123
+          - MYSQL_DATABASE=pardeep_docker
+          - MYSQL_USER=root
+          - MYSQL_PASSWORD=Learn2Exceed@123
+        ports:
+          - "8082:3306"
+  pardeep_project:
+    container_name: php72
+    build:
+      context: ./
+    volumes:
+      - ~/Desktop/docker-app/src:/var/www/html
+    ports:
+      - 8000:80
+    depends_on:
+      - mysql
